@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100vh;
+    font-size: clamp(16px, 1.5vw, 20px);
+    overflow: auto;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+    color: #222;
+    background: #fafafa;
+    line-height: 1.6;
+}
+
+/* FLEX-КОНТЕЙНЕР (Головний - вертикальний напрямок) */
+.container {
+    display: flex;
+    flex-direction: column; /* Основний Flex-контейнер для 4-х "рядів" */
+    min-height: 100vh;
+    min-width: 1250px;
+    width: max(1250px, 100%);
+    gap: 8px; 
+    padding: 8px;
+}
+
+/* СЕКЦІЯ ТІЛА (Охоплює 3 верхні ряди: block1, 3, 4, 5, 2) */
+.main-layout {
+    display: flex; /* Розділяє на 3 основні стовпці: (1,3), (4,5), (2) */
+    flex-grow: 1; /* Займає всю доступну висоту */
+    gap: 8px;
+    /* Пропорції стовпців: (1.2fr + 2fr) vs 1fr. Це співвідношення 3.2 : 1 */
+}
+
+/* ЛІВІ 2 СТОВПЦІ (block1, 3, 4, 5) */
+.content-columns {
+    /* Ширина 1.2fr + 2fr = 3.2fr. 3.2 / 4.2 ≈ 76.19% */
+    flex-basis: calc(100% * 3.2 / 4.2); 
+    flex-shrink: 0;
+    display: flex; /* Цей контейнер містить два менші стовпці: column-left та column-center */
+    flex-direction: column; /* Внутрішні елементи йдуть зверху вниз */
+    gap: 8px;
+}
+
+/* РЯДОК 1 (block1) */
+.row-1-block1 {
+    display: flex;
+    gap: 8px;
+}
+
+/* РЯДОК 2/3 (block3, 4, 5) */
+.row-2-3-content {
+    display: flex;
+    flex-grow: 1; /* Займає решту висоти */
+    gap: 8px;
+}
+
+/* 1. ЛІВИЙ СТОВПЕЦЬ: block3 */
+.column-left {
+    /* Ширина 1.2fr. 1.2 / 3.2 ≈ 37.5% від content-columns */
+    flex-basis: calc(100% * 1.2 / 3.2); 
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. ЦЕНТРАЛЬНИЙ СТОВПЕЦЬ: block4, block5 */
+.column-center {
+    /* Ширина 2fr. 2 / 3.2 ≈ 62.5% від content-columns */
+    flex-basis: calc(100% * 2 / 3.2);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 3. ПРАВИЙ СТОВПЕЦЬ: block2 (СУЦІЛЬНИЙ) */
+.block2 {
+    /* Ширина 1fr. 1 / 4.2 ≈ 23.81% від main-layout */
+    flex-basis: calc(100% * 1 / 4.2);
+    flex-shrink: 0;
+    background-color: #e3efd9;
+    flex-grow: 1; /* Ключова властивість: розтягує блок 2 на всю висоту main-layout */
+}
+
+/* БЛОКИ (ЗАГАЛЬНІ СТИЛІ) */
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #bdbdbd;
+    background: white;
+    position: relative;
+    overflow: visible;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+/* Специфічні стилі та Flex-логіка */
+
+.block1 {
+    /* block1 займає row-1-block1 */
+    flex-grow: 1; 
+    background-color: #c9ddf2;
+    min-height: 180px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding-left: 16px;
+}
+
+.block3 {
+    /* block3 займає row-2/3 у column-left */
+    background-color: #fbe3d1;
+    align-items: flex-start;
+    flex-grow: 1; /* Ключова властивість: розтягує block3 на всю висоту row-2-3-content */
+}
+
+.block4 { 
+    /* block4 займає row-2 у column-center (auto-висота) */
+    background-color: #fbe3d1;
+    align-items: flex-start;
+    flex-grow: 0; /* Висота auto */
+}
+
+.block5 { 
+    /* block5 займає row-3 у column-center (1fr висота) */
+    display: block;
+    background-color: #ffffff;
+    align-items: flex-start; 
+    flex-grow: 1; /* Ключова властивість: займає весь простір, що залишився */
+}
+
+.block6 { 
+    /* block6 займає всю ширину в останньому рядку */
+    flex-grow: 0; 
+    background-color: #c9ddf2; 
+    min-height: 180px;
+    justify-content: flex-start; 
+    align-items: center; 
+    gap: 12px;
+}
+
+/* ... (Всі інші стилі залишаються без змін) ... */
+
+/* КОНТЕНТ У БЛОКАХ */
+/* ... */
+
+@media (max-width: 1300px) {
+    .container { gap: 6px; padding: 6px; }
+    .block { padding: 10px; }
+}
